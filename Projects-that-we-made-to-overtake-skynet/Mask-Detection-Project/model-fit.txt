@@ -1,0 +1,47 @@
+model_fit = model.fit(train_dataset,
+                     steps_per_epoch = 2,
+                     epochs = 20,
+                     validation_data = validation_dataset)
+
+
+
+Epoch 1/20
+2/2 [==============================] - 1s 503ms/step - loss: 1.0668 - accuracy: 0.6667 - val_loss: 0.3279 - val_accuracy: 0.9444
+Epoch 2/20
+2/2 [==============================] - 1s 476ms/step - loss: 0.1300 - accuracy: 1.0000 - val_loss: 0.2338 - val_accuracy: 0.8889
+Epoch 3/20
+2/2 [==============================] - 1s 471ms/step - loss: 0.0888 - accuracy: 1.0000 - val_loss: 0.4461 - val_accuracy: 0.7778
+Epoch 4/20
+2/2 [==============================] - 1s 460ms/step - loss: 0.2278 - accuracy: 0.8333 - val_loss: 0.3590 - val_accuracy: 0.8333
+Epoch 5/20
+2/2 [==============================] - 1s 492ms/step - loss: 0.2055 - accuracy: 1.0000 - val_loss: 0.2550 - val_accuracy: 0.8333
+Epoch 6/20
+2/2 [==============================] - 1s 504ms/step - loss: 0.0618 - accuracy: 1.0000 - val_loss: 0.1628 - val_accuracy: 1.0000
+Epoch 7/20
+2/2 [==============================] - 1s 463ms/step - loss: 0.0908 - accuracy: 1.0000 - val_loss: 0.3546 - val_accuracy: 0.7778
+Epoch 8/20
+2/2 [==============================] - 1s 465ms/step - loss: 0.0938 - accuracy: 1.0000 - val_loss: 0.2253 - val_accuracy: 0.8889
+Epoch 9/20
+2/2 [==============================] - 1s 480ms/step - loss: 0.0065 - accuracy: 1.0000 - val_loss: 0.1822 - val_accuracy: 1.0000
+Epoch 10/20
+2/2 [==============================] - 1s 451ms/step - loss: 0.0526 - accuracy: 1.0000 - val_loss: 0.1249 - val_accuracy: 0.9444
+Epoch 11/20
+2/2 [==============================] - 1s 489ms/step - loss: 0.1246 - accuracy: 0.8333 - val_loss: 0.6966 - val_accuracy: 0.6667
+Epoch 12/20
+2/2 [==============================] - 1s 477ms/step - loss: 0.0495 - accuracy: 1.0000 - val_loss: 0.3400 - val_accuracy: 0.8333
+Epoch 13/20
+2/2 [==============================] - 1s 455ms/step - loss: 0.0029 - accuracy: 1.0000 - val_loss: 0.4056 - val_accuracy: 0.8333
+Epoch 14/20
+2/2 [==============================] - 1s 470ms/step - loss: 0.4541 - accuracy: 0.8333 - val_loss: 0.2620 - val_accuracy: 0.8889
+Epoch 15/20
+2/2 [==============================] - 1s 480ms/step - loss: 0.0273 - accuracy: 1.0000 - val_loss: 0.1118 - val_accuracy: 1.0000
+Epoch 16/20
+2/2 [==============================] - 1s 502ms/step - loss: 0.0049 - accuracy: 1.0000 - val_loss: 0.1001 - val_accuracy: 1.0000
+Epoch 17/20
+2/2 [==============================] - 1s 557ms/step - loss: 0.0118 - accuracy: 1.0000 - val_loss: 0.0627 - val_accuracy: 1.0000
+Epoch 18/20
+2/2 [==============================] - 1s 528ms/step - loss: 0.0137 - accuracy: 1.0000 - val_loss: 0.1663 - val_accuracy: 0.8889
+Epoch 19/20
+2/2 [==============================] - 1s 503ms/step - loss: 0.0025 - accuracy: 1.0000 - val_loss: 0.0839 - val_accuracy: 1.0000
+Epoch 20/20
+2/2 [==============================] - 1s 500ms/step - loss: 0.0116 - accuracy: 1.0000 - val_loss: 0.0849 - val_accuracy: 0.9444

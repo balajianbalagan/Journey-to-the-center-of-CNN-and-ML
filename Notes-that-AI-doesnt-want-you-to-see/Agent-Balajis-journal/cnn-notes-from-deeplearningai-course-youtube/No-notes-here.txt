@@ -1,0 +1,143 @@
+============
+L1 : Why CV?
+============
+problems : image classification and object detection.
+Use of convolution is we can train huge images easily by using filters.
+===================
+L2&3 : Edge detection
+===================
+vert edge filter :
+1 0 -1
+1 0 -1
+1 0 -1
+horizontal edge filter:
+1 1 1
+0 0 0 
+-1 -1 -1
+
+Image *(convolute) Filter = (n-f+1 x n-f+1) pixels
+(nxn)  	 	   (fxf) 
+
+sobel filter
+1 0 -1
+2 0 -2
+1 0 -1
+scharr filter
+3 0 -3
+10 0 -10
+3 0 -3
+many cases the filters are hand picked depending upon usage
+============
+L4 : Padding
+============
+we pad some pixels to original image so that we wont
+1) shrink output
+2) throw away info from edge
+
+eg) 6x6 * 3x3 = 4*4 (n-f+1,n-f+1)
+if we pad 1 pixel on each side of image
+we have => 8x8 * 3x3 = 6x6 (original image size is preserved)
+
+this is called "Same" convolutions
+
+f is always odd , p = f-1/2 coz padding should not be asymetrical
+========================
+L5 : Strided convolution
+========================
+instead of skipping one step we stride to "s" steps
+if s = 2, padding p
+eg) 7x7 * 3x3 = 3x3 floor[(n+2p-f/s + 1) x (n+2p-f/s + 1)]
+
+cross correlation vs convolution 
+before taking element wise sum we need to flip the rows to columsn in reverse (called mirroring)
+usually we don't bother avout this
+==============================
+L6 : Convolutions over volumes
+==============================
+convolutions of rgb images [6(height)x6(width)x3(channels)] * [3(height)x3(width)x3(channels)] 
+= [4x4]
+channels of image must be = channels of filter
+the convolution operator works as follows
+(multiply for red channel + blue channel + green channel) = output
+ 
+we can also use multiple filters but output will be "nf" number of channels where "nf"
+is the number of filters used
+=====================================
+L7 : One layer of convolution network
+=====================================
+
+example a 6x6x3 image is convoluted with 2 filter of 3x3x3
+which is given by relu(4x4x1 + b1) + relu(4x4x1 + b2)
+
+now we stack them to get
+4x4x2
+
+Notations :
+f[l] = filter size
+p[l] = padding size
+s[l] = stride
+nc[l] = number of filters
+each filter is : f[l] x f[l] x nc[l-1]
+activations : a[l] -> nh[l] x nw[l] x nc[l]	A[l] -> m x nh[l] x nw[l] x nc[l]
+weights : f[l] x f[l] x nc[l-1] x nc[l]
+bias : nc[l] - (1,1,1,nc[l])
+
+input : nh[l-1] x nw[l-1] x nc[l-1]
+output : nh[l] x nw[l] x nc[l]
+
+nh[l] = nw[l] = floor [ [ ( nhw[l-1] + 2p[l] - f[l] ) / s[l] ] + 1]
+
+===================================
+L8 : Simple convolution network
+===================================
+
+let's have a small image 39x39x3 
+=> 10 filters of 3x3 with 1stride
+layer 1 = > 37x37x10 (Activation at first layer)
+=> 5 filters of 5x5 with 2stride
+layer 2 => 17x17x20 => 
+40 filters of 5x5 2stride => 7x740 (1960) 
+now we can flatten it out and give to logistic
+regression / softmax to give us a value
+
+types of layer in cnn :
+-convolution (CONV)
+-pooling (POOL)
+- fully connected (FC)
+
+pool and fc are quite simpler than cnn
+
+===================
+L9 : Pooling layers
+===================
+to reduce size of image and speed up computation we use pooling
+if we have 4x4 input -> we break it into certain regions in which
+each region has the max of left 
+
+1 3  |	2 1	----> 	9   |	2
+2 9  |	1 1	---->	----------			
+------------	---->	6   |	3
+1 3  |	2 3	---->
+5 6  |	1 2	---->
+
+what max operation does is if feature detected keep the high number
+that matters and it works well.
+
+it has hyperparameters f and s which doesnt change (common choices (f=2,s=2),
+(f=3,s=2))
+
+max pooling is used many times
+but in dlnn average pooling is used
+====================
+L10 : Example of CNN
+====================
+Neural network example lenet-5
+
+input
+conv1(f=5,s=1) + pool1
+conv2(f=5,s=1) + pool2
+fc3
+fc4
+softmax
+
+
