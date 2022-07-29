@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+<style>
+
+</style>
+<body >
+	<div class="container p-0" >
+		<header >
+	      <nav class="navbar navbar-dark bg-dark rounded">
+	        <a class="navbar-brand">
+	        	<i class="fas fa-camera"></i>
+	        	<strong>Masks Detection</strong>
+	        </a>
+	      </nav>
+	    </header>
+	</div>
+	
+
+	<div class="container ">
+		<div class="row bg-light" style="height:480px">
+			<video id="video" playsinline class="border " style="margin:auto;display:inline-block;"></video>
+			<canvas id="output" class="canvas-output" style="margin:auto;position:relative;top:-480px;left:10px"></canvas>
+			<div class="float-right">
+	    		<a href="https://www.youtube.com/user/chirpieful">
+	    			<img src="../static/img/yicong.jpg" class="rounded" style="height:30px;width:30px;position:relative;top:-30px;">
+	    		</a>
+	    	</div>
+		</div> 
+    </div>
+</body>
+<script>
+	//Coded by oh yicong, visit my youtube channel for more programming tutorials :)
+	var model, mask_model, ctx, videoWidth, videoHeight, canvas;
+	const video = document.getElementById('video');
+	const state = {
+	  backend: 'webgl'
+	};
+	async function setupCamera() {
+		const stream = await navigator.mediaDevices.getUserMedia({
+		    'audio': false,
+		    'video': { facingMode: 'user' },
+		});
+		video.srcObject = stream;
+	    return new Promise((resolve) => {
+		    video.onloadedmetadata = () => {
+		      resolve(video);
+		    };
+		});
+	}
+
+	const renderPrediction = async () => {
+		tf.engine().startScope()
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		//estimatefaces model takes in 4 parameter (1) video, returnTensors, flipHorizontal, and annotateBoxes
+		const predictions = await model.estimateFaces(video, true,false,false);
+		const offset = tf.scalar(127.5);
+		//check if prediction length is more than 0
+		if (predictions.length > 0) {
+			//clear context
+		    
+		    for (let i = 0; i < predictions.length; i++) {
+		    	var text=""
+			    var start = predictions[i].topLeft.arraySync();
+			    var end = predictions[i].bottomRight.arraySync();
+			    var size = [end[0] - start[0], end[1] - start[1]];
+			    if(videoWidth<end[0] && videoHeight<end[0]){
+			    	console.log("image out of frame")
+			    	continue
+			    }
+			    var inputImage = tf.browser.fromPixels(video).toFloat()
+			    inputImage = inputImage.sub(offset).div(offset);
+			    inputImage=inputImage.slice([parseInt(start[1]),parseInt(start[0]),0],[parseInt(size[1]),parseInt(size[0]),3])
+			    inputImage=inputImage.resizeBilinear([224,224]).reshape([1,224,224,3])
+			    result=mask_model.predict(inputImage).dataSync()
+			    result= Array.from(result)
+			    ctx.beginPath()
+			    if (result[1]>result[0]){
+			    	//no mask on
+			      	ctx.strokeStyle="red"
+			      	ctx.fillStyle = "red";
+			      	text = "No Mask: "+(result[1]*100).toPrecision(3).toString()+"%";
+			    }else{
+			    	//mask on
+			      	ctx.strokeStyle="green"
+			      	ctx.fillStyle = "green";
+			      	text = "Mask: "+(result[0]*100).toPrecision(3).toString()+"%";
+			    }
+		        ctx.lineWidth = "4"
+			    ctx.rect(start[0], start[1],size[0], size[1])
+			    ctx.stroke()
+			    ctx.font = "bold 15pt sans-serif";
+			    ctx.fillText(text,start[0]+5,start[1]+20)
+		    }     
+		}
+		//update frame
+		requestAnimationFrame(renderPrediction);
+		tf.engine().endScope()
+	};
+
+	const setupPage = async () => {
+	    await tf.setBackend(state.backend);
+	    await setupCamera();
+	    video.play();
+
+	    videoWidth = video.videoWidth;
+	    videoHeight = video.videoHeight;
+	    video.width = videoWidth;
+	    video.height = videoHeight;
+
+	    canvas = document.getElementById('output');
+	    canvas.width = videoWidth;
+	    canvas.height = videoHeight;
+	    ctx = canvas.getContext('2d');
+	    ctx.fillStyle = "rgba(255, 0, 0, 0.5)"; 
+
+	    model = await blazeface.load();
+	    
+	    mask_model = await tf.loadLayersModel('../static/models/model.json');
+
+	   renderPrediction();
+	};
+
+	setupPage();
+
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>	
+
+</html>
