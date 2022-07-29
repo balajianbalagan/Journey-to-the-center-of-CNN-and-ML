@@ -1,0 +1,51 @@
+Mr.B : Okay so we are going to launch it
+Mr.A : Are you sure? I mean it is a good model but will it extract the correct feature points and given the activation and layer count is our optimizer selection correct?
+Mr.B : Too bad i've already pressed the launch button.
+
+Here's our notebook with a basic model
+
+https://github.com/balajianbalagan/Journey-to-the-center-of-CNN-and-ML/blob/main/Projects-that-we-made-to-overtake-skynet/Paddy-Doctor-Project/Paddy(1).ipynb
+
+<h1>TRAINING RESULTS</h1>
+
+Epoch 1/15
+32/32 [==============================] - 77s 2s/step - loss: 2.1833 - accuracy: 0.1875 - val_loss: 2.1016 - val_accuracy: 0.2305
+Epoch 2/15
+32/32 [==============================] - 67s 2s/step - loss: 2.0194 - accuracy: 0.2601 - val_loss: 1.9137 - val_accuracy: 0.3394
+Epoch 3/15
+32/32 [==============================] - 71s 2s/step - loss: 1.8083 - accuracy: 0.3620 - val_loss: 1.7523 - val_accuracy: 0.3682
+Epoch 4/15
+32/32 [==============================] - 62s 2s/step - loss: 1.6949 - accuracy: 0.3950 - val_loss: 1.6508 - val_accuracy: 0.4009
+Epoch 5/15
+32/32 [==============================] - 72s 2s/step - loss: 1.5684 - accuracy: 0.4477 - val_loss: 1.4997 - val_accuracy: 0.4834
+Epoch 6/15
+32/32 [==============================] - 64s 2s/step - loss: 1.4044 - accuracy: 0.5130 - val_loss: 1.4252 - val_accuracy: 0.5088
+Epoch 7/15
+32/32 [==============================] - 65s 2s/step - loss: 1.2664 - accuracy: 0.5690 - val_loss: 1.2911 - val_accuracy: 0.5635
+Epoch 8/15
+32/32 [==============================] - 67s 2s/step - loss: 1.0870 - accuracy: 0.6338 - val_loss: 1.0880 - val_accuracy: 0.6499
+Epoch 9/15
+32/32 [==============================] - 64s 2s/step - loss: 0.9526 - accuracy: 0.6817 - val_loss: 1.0633 - val_accuracy: 0.6489
+Epoch 10/15
+32/32 [==============================] - 67s 2s/step - loss: 0.7944 - accuracy: 0.7432 - val_loss: 0.9093 - val_accuracy: 0.7119
+Epoch 11/15
+32/32 [==============================] - 64s 2s/step - loss: 0.6817 - accuracy: 0.7811 - val_loss: 0.8900 - val_accuracy: 0.7290
+Epoch 12/15
+32/32 [==============================] - 68s 2s/step - loss: 0.5485 - accuracy: 0.8230 - val_loss: 0.8946 - val_accuracy: 0.7241
+Epoch 13/15
+32/32 [==============================] - 65s 2s/step - loss: 0.4628 - accuracy: 0.8526 - val_loss: 0.7865 - val_accuracy: 0.7744
+Epoch 14/15
+32/32 [==============================] - 65s 2s/step - loss: 0.4019 - accuracy: 0.8730 - val_loss: 0.6649 - val_accuracy: 0.8081
+Epoch 15/15
+32/32 [==============================] - 65s 2s/step - loss: 0.3375 - accuracy: 0.8948 - val_loss: 0.7177 - val_accuracy: 0.7974
+<keras.callbacks.History at 0x7fea6b00dc90>
+
+
+<h1>Woohoo ryt....ryt?</h1>
+
+Well it didn't score as well as we expected it to but hey it's our first attempt in learning, we are working on our model with our remaining to brain cells. 
+
+Wondering how to improve your CNN model as a beginner well we are wondering it too but found these wonderful videos/links to improve :
+1) https://www.youtube.com/watch?v=KdhphuuHyxA&ab_channel=KeraiLabs
+2) https://www.kaggle.com/code/jhoward/first-steps-road-to-the-top-part-1 (this whole series is OG mahn!)
+3) https://www.youtube.com/watch?v=ONFm9TXav_Y&ab_channel=ManifoldAILearning
